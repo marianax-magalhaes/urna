@@ -31,10 +31,33 @@ function comecarEtapa(){
 }
 
 function atualizaInterface(){
-
+    let etapa = etapas[etapaAtual];
+    let candidato = etapa.candidatos.filter((item)=>{
+        if(item.numero === numero){
+            return true;
+        } else{
+            return false;
+        }
+    });
+    if(candidato.length > 0){
+        candidato = candidato[0];
+        seuVotoPara.style.display = 'block';
+        aviso.style.display = 'block';
+        descricao.innerHTML = `Nome: ${candidato.nome}<br>Partido: ${candidato.partido}`;
+        
+        let fotosHtml = '';
+        for(let i in candidato.fotos){
+            fotosHtml += `<div class="d-1-img"><img src="imgs/${candidato.fotos[i].url}" alt="">${candidato.fotos[i].legenda}</div>`;
+        }
+        lateral.innerHTML = fotosHtml;
+    } else{
+        seuVotoPara.style.display='block';
+        aviso.style.display = 'block';
+        descricao.innerHTML = `<div class="aviso--grande pisca">VOTO NULO</div>` ;
+    }
 }
 
-// funcoes
+
 function clicou(n){
     // alert("Clicou em " + n)
     let elNumero = document.querySelector('.numero.pisca');
@@ -42,6 +65,13 @@ function clicou(n){
     if(elNumero !==null){
         elNumero.innerHTML=n;
         numero = `${numero}${n}`;
+
+        elNumero.classList.remove('pisca');
+        if(elNumero.nextElementSibling !== null){
+            elNumero.nextElementSibling.classList.add('pisca');
+        } else{
+            atualizaInterface();
+        }
     }
 }
 
