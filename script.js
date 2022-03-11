@@ -101,7 +101,7 @@ function corrige(){
 function confirma(){
     let etapa = etapas[etapaAtual];
     let votoConfirmado = false;
-    
+     
 
     if(branco===true){
         votoConfirmado = true;
